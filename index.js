@@ -4,9 +4,11 @@ const input = document.getElementById("input");
 const btn = document.getElementById("btn");
 const dropdowns = document.querySelectorAll(".dropdown-item");
 const refreshBtn = document.getElementById("refreshBtn");
+const sortBtn = document.querySelector(".sort-btn");
 for (let dropdown of dropdowns) {
   dropdown.addEventListener("click", () => {
     btn.innerHTML = dropdown.innerText;
+    input.value = "";
     if (btn.innerText === "Email") {
       input.placeholder = "Search users with their email";
     } else if (btn.innerText === "Username") {
@@ -63,12 +65,11 @@ const getAddress = (userObj) => {
 
 const searchUser = (event) => {
   // console.log(event)
-  if (event.key === "Enter" && event.target.value.length > 3) {
+  let value = event.target.value;
+  if (event.key === "Enter") {
     const filteredUsers = userArr.filter((user) => {
       if (btn.innerText === "Email") {
-        if (
-          user.email.toLowerCase().includes(event.target.value.toLowerCase())
-        ) {
+        if (user.email.toLowerCase().includes(value.toLowerCase())) {
           return user;
         }
       } else if (btn.innerText === "Username") {
@@ -85,12 +86,29 @@ const searchUser = (event) => {
         }
       }
     });
+    input.value = "";
     console.log(filteredUsers);
     // displayFilteredCardUser(filteredUsers);
     displayCard(filteredUsers);
   }
 };
 
+let sorted = true;
+const sort = (users) => {
+  const sortedUsers = users.sort((a, b) => a.name.localeCompare(b.name));
+
+  if (sorted) {
+    displayCard(sortedUsers);
+    sorted = false;
+  } else {
+    displayCard(sortedUsers.reverse());
+    sorted = true;
+  }
+};
+
+sortBtn.addEventListener("click", () => {
+  sort(userArr);
+});
 refreshBtn.addEventListener("click", getUser);
 
 window.onload = () => {
