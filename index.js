@@ -1,6 +1,14 @@
 let userArr = [];
 const row = document.getElementById("row");
 const input = document.getElementById("input");
+const btn = document.getElementById("btn");
+const dropdowns = document.querySelectorAll(".dropdown-item");
+for (let dropdown of dropdowns) {
+  dropdown.addEventListener("click", () => {
+    btn.innerHTML = dropdown.innerText;
+  });
+}
+
 const getUser = async () => {
   try {
     const response = await fetch("https://jsonplaceholder.typicode.com/users");
@@ -82,8 +90,24 @@ const searchUser = (event) => {
   // console.log(event)
   if (event.key === "Enter" && event.target.value.length > 3) {
     const filteredUsers = userArr.filter((user) => {
-      if (user.name.toLowerCase().includes(event.target.value.toLowerCase())) {
-        return user;
+      if (btn.innerText === "Email") {
+        if (
+          user.email.toLowerCase().includes(event.target.value.toLowerCase())
+        ) {
+          return user;
+        }
+      } else if (btn.innerText === "Username") {
+        if (
+          user.username.toLowerCase().includes(event.target.value.toLowerCase())
+        ) {
+          return user;
+        }
+      } else {
+        if (
+          user.name.toLowerCase().includes(event.target.value.toLowerCase())
+        ) {
+          return user;
+        }
       }
     });
     console.log(filteredUsers);
