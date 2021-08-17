@@ -3,6 +3,7 @@ const row = document.getElementById("row");
 const input = document.getElementById("input");
 const btn = document.getElementById("btn");
 const dropdowns = document.querySelectorAll(".dropdown-item");
+const refreshBtn = document.getElementById("refreshBtn");
 for (let dropdown of dropdowns) {
   dropdown.addEventListener("click", () => {
     btn.innerHTML = dropdown.innerText;
@@ -114,6 +115,8 @@ const searchUser = (event) => {
     displayFilteredCardUser(filteredUsers);
   }
 };
+
+refreshBtn.addEventListener("click", getUser);
 
 window.onload = () => {
   getUser();
