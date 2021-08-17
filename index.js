@@ -7,6 +7,13 @@ const refreshBtn = document.getElementById("refreshBtn");
 for (let dropdown of dropdowns) {
   dropdown.addEventListener("click", () => {
     btn.innerHTML = dropdown.innerText;
+    if (btn.innerText === "Email") {
+      input.placeholder = "Search users with their email";
+    } else if (btn.innerText === "Username") {
+      input.placeholder = "Search users with their username";
+    } else {
+      input.placeholder = "Search users with their name";
+    }
   });
 }
 
